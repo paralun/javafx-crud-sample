@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -59,12 +60,15 @@ public class Controller implements Initializable{
         phoneColumn.setCellValueFactory(param -> param.getValue().phoneProperty());
         emailColumn.setCellValueFactory(param -> param.getValue().emailProperty());
 
+        //emailColumn.setCellValueFactory(new PropertyValueFactory<Mahasiswa, String>("email"));
+
         tabelView.setItems(maha);
     }
 
     @FXML
     public void tambah(ActionEvent event){
-
+        maha.add(new Mahasiswa(nim.getText(),nama.getText(),alamat.getText(),phone.getText(),email.getText()));
+        reset();
     }
 
     @FXML
@@ -74,7 +78,9 @@ public class Controller implements Initializable{
 
     @FXML
     public void hapus(ActionEvent event){
-
+        //Mahasiswa siswa = tabelView.getSelectionModel().getSelectedItem();
+        int index = tabelView.getSelectionModel().getSelectedIndex();
+        maha.remove(index);
     }
 
     @FXML
@@ -85,5 +91,13 @@ public class Controller implements Initializable{
     @FXML
     public void keluar(ActionEvent event){
 
+    }
+
+    public void reset(){
+        nim.setText("");
+        nama.setText("");
+        alamat.setText("");
+        phone.setText("");
+        email.setText("");
     }
 }
